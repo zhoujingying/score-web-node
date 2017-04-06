@@ -121,7 +121,9 @@ module.exports = {
     calculateClass,
     getStuNum,
     getStuClassInfo,
-    toPrintString
+    toPrintString,
+    addStudentsInfo,
+    printStudentsInfo
 };
 
 
