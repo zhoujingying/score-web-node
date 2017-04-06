@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>查找学生</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="js/ejs.min.js">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/js/ejs.min.js">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -16,23 +16,14 @@
         </ul>
     </div>
 </nav>
+<form action="/selectStudents/find" method="post">
 <div class="form-group">
     <label for="select-student-text">格式：学号，学号,...</label>
-    <input type="text" class="form-control" id="select-student-text">
+    <input type="text" class="form-control" id="select-student-text" name="stuNum">
 </div>
-<button type="submit" class="btn btn-default">确认</button>
 
-<div class="show-stu-info" style="display: none">
-    <p>成绩单</p>
-    <div class="stu-list">
-        <p>姓名|数学|语文|英语|编程|平均分|总分</p>
-        <p>================================</p>
-        <p><span id="stu-name"></span>|<span id="stu-math"></span>|<span id="stu-chinese"></span>|<span id="stu-english"></span>
-            |<span id="stu-program"></span>|<span id="stu-total"></span>|<span id="stu-ave"></span></p>
-        <p>================================</p>
-        <p>全班平均分为：<span id="class-ave"></span></p>
-        <p>全班中位分为：<span id="class-mid"></span></p>
-    </div>
-</div>
+<button type="submit" class="btn btn-default">确认</button>
+</form>
+
 </body>
 </html>

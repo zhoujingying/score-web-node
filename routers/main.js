@@ -35,8 +35,17 @@ router.post('/addStudent/add',function (req,res) {
     // responseData.code = 0;
     // responseData.message = '添加成功';
     // res.json(responseData);
-    res.render('main',{});
+    res.render('addStudent',{});
     // return;
+})
+
+router.post('/selectStudents/find',function (req,res) {
+    var number = req.body.stuNum;
+    Student.printStudentsInfo(number);
+    var stuInfo = Student.classArr;
+    res.render('showInfo',{
+        stuInfo:stuInfo
+    })
 })
 
 module.exports = router;
