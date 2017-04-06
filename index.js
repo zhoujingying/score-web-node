@@ -12,8 +12,68 @@ const CHOOSE_SECOND = 'CHOOSE_SECOND';
 const CHOOSE_THIRD = 'CHOOSE_THIRD';
 
 let inputChoose = CHOOSE_FIRST;
-var stuArr = [];
-var classArr = [];
+
+
+
+
+
+
+var express = require('express');
+let app = express();
+app.use(express.static(__dirname + '/public'));
+
+//指定模板引擎
+app.set("view engine", 'ejs');
+app.set('views','./views');
+
+app.use('/',require('./routers/main'));
+//利用模板文件home.ejs渲染为html
+
+
+// app.get("/main.html", function(req, res) {
+//     res.render('main', {
+//
+//     });
+// });
+//
+// app.get('/addStudent.html',function (req,res) {
+//     res.render('addStudent',{});
+// });
+//
+// app.get('/selectStudents.html',function (req,res) {
+//     res.render('selectStudents',{});
+// })
+//
+// app.get('../index.js',function (req,res) {
+//     res.render('selectStudents',{});
+// })
+//静态文件托管
+
+
+app.listen(3006,function(){
+    console.log('running on port 3002');
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -59,6 +119,9 @@ function statusOperate(inputChoose) {
     }
 }
 
+
+var stuArr = [];
+var classArr = [];
 
 function addStudentsInfo(stuInfoStr){
     var stu = getStuInfo(stuInfoStr);
