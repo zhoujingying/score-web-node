@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>新增学生</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
+    <script type="text/javascript" src="/js/jquery.js"></script>
 </head>
 <body>
 
@@ -16,12 +17,39 @@
         </ul>
     </div>
 </nav>
-<form action="/addStudent/add" method="post">
 <div class="form-group">
     <label for="add-student-text">格式：姓名，学号，名族，班级，学科：成绩，...</label>
     <input type="text" class="form-control" id="add-student-text" name="stu">
 </div>
-<button type="submit" class="btn btn-default">确认</button>
-</form>
+<button type="button" class="btn btn-default" id="btn">确认</button>
 </body>
 </html>
+
+<script>
+    $(function () {
+        function getValue() {
+            return{
+                student:$('.form-group').find('input').val()
+            }
+        }
+
+        $('#btn').on('click',function () {
+            $.ajax({
+                type:'post',
+                url:'/addStudent/add',
+                data:getValue(),
+                dataType:'json',
+                success:function(result){
+                    if(!result){
+//                        window.location.reload();
+                        alert('添加失败');
+                    }else{
+                        window.location.reload();
+                        alert('添加成功');
+                    }
+                }
+            })
+        })
+
+    })
+</script>

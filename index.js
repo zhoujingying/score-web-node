@@ -13,7 +13,6 @@ function addStudentsInfo(stuInfoStr){
 function printStudentsInfo(stuNumStr){
     var stuNum = getStuNum(stuNumStr);
     return getStuClassInfo(stuNum);
-    // return toPrintString(classInfo);
 }
 
 function addStudent(stu) {
