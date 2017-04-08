@@ -26,25 +26,29 @@ router.get('/addStudent',function(req,res){
 
 router.get('/selectStudents',function(req,res){
 
-    res.render('selectStudents',{});
+    res.render('selectStudents',{
+        code:0
+    });
 });
 
-router.post('/addStudent/add',function (req,res) {
+router.post('/addStudent',function (req,res) {
     var student = req.body.student;
     Student.addStudentsInfo(student);
     responseData.code = 0;
     responseData.message = '添加成功';
     res.json(responseData);
-    // res.render('addStudent',{});
-    // return;
 })
 
-router.post('/selectStudents/find',function (req,res) {
+router.post('/selectStudents',function (req,res) {
+
     var number = req.body.stuNum;
     var stuInfo = Student.printStudentsInfo(number);
-    res.render('showInfo',{
-        stuInfo:stuInfo
-    })
+
+    // res.render('selectStudents',{
+    //     stuInfo:stuInfo,
+    //     code:1
+    // })
+    res.send(stuInfo);
 })
 
 module.exports = router;

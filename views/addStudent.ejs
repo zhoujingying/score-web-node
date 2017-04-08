@@ -36,7 +36,7 @@
         $('#btn').on('click',function () {
             $.ajax({
                 type:'post',
-                url:'/addStudent/add',
+                url:'/addStudent',
                 data:getValue(),
                 dataType:'json',
                 success:function(result){
