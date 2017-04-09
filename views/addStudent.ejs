@@ -4,51 +4,105 @@
     <meta charset="UTF-8">
     <title>新增学生</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/index.css">
     <script type="text/javascript" src="/js/jquery.js"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-    <div class="container">
-        <ul class="nav nav-pills">
-            <li><a href="/">首页</a></li>
-            <li><a href="/addStudent">新增学生</a></li>
-            <li><a href="/selectStudents">查询学生</a></li>
-        </ul>
+<%- include('../template/nav'); %>
+
+<div class="form-group text-box">
+
+    <div class="stu-list">
+        <label for="stu_name">姓名:</label>
+        <input type="text" class="form-control" id="stu_name">
     </div>
-</nav>
-<div class="form-group">
-    <label for="add-student-text">格式：姓名，学号，名族，班级，学科：成绩，...</label>
-    <input type="text" class="form-control" id="add-student-text" name="stu">
+    <div class="stu-list">
+        <label for="stu_num">学号:</label>
+        <input type="text" class="form-control" id="stu_num">
+    </div>
+    <div class="stu-list">
+        <label for="stu_nation">名族:</label>
+        <input type="text" class="form-control" id="stu_nation">
+    </div>
+    <div class="stu-list">
+        <label for="stu_class">班级:</label>
+        <input type="text" class="form-control" id="stu_class">
+    </div>
+    <div class="stu-list">
+        <label for="stu_sbj_math">数学成绩:</label>
+        <input type="text" class="form-control" id="stu_sbj_math">
+    </div>
+    <div class="stu-list">
+        <label for="stu_sbj_chinese">语文成绩:</label>
+        <input type="text" class="form-control" id="stu_sbj_chinese">
+    </div>
+    <div class="stu-list">
+        <label for="stu_sbj_english">英语成绩:</label>
+        <input type="text" class="form-control" id="stu_sbj_english">
+    </div>
+    <div class="stu-list">
+        <label for="stu_sbj_program">编程成绩:</label>
+        <input type="text" class="form-control" id="stu_sbj_program">
+    </div>
+    <button type="button" class="btn btn-default" id="btn">确认</button>
+
 </div>
-<button type="button" class="btn btn-default" id="btn">确认</button>
+
 </body>
 </html>
 
+
+
 <script>
     $(function () {
+        var name,stuNo,nation,className,math,chinese,english,program;
         function getValue() {
             return{
-                student:$('.form-group').find('input').val()
+                name:name,
+                stuNo:stuNo,
+                nation:nation,
+                className:Number(className),
+                subject:{
+                    Math: Number(math),
+                    Chinese:Number(chinese),
+                    English:Number(english),
+                    program:Number(program),
+                }
             }
         }
 
         $('#btn').on('click',function () {
-            $.ajax({
-                type:'post',
-                url:'/addStudent',
-                data:getValue(),
-                dataType:'json',
-                success:function(result){
-                    if(!result){
-//                        window.location.reload();
-                        alert('添加失败');
-                    }else{
-                        window.location.reload();
-                        alert('添加成功');
+
+
+            name = $('#stu_name').val()||'';
+            stuNo = $('#stu_num').val()||'';
+            nation = $('#stu_nation').val()||'';
+            className = Number($('#stu_class').val())||'';
+            math = Number($('#stu_sbj_math').val())||'';
+            chinese = Number($('#stu_sbj_chinese').val())||'';
+            english =  Number($('#stu_sbj_english').val())||'';
+            program = Number($('#stu_sbj_program').val())||'';
+
+            if(name!==''&&stuNo!==''&&nation!==''&&className!==''&&math!==''&&chinese!==''&&english!==''&&program!=='') {
+                $.ajax({
+                    type: 'post',
+                    url: '/addStudent',
+                    data: getValue(),
+                    dataType: 'json',
+                    success: function (result) {
+                        if (!result) {
+                            alert('添加失败');
+                        } else {
+                            window.location.reload();
+                            alert('添加成功');
+                        }
                     }
-                }
-            })
+                })
+            }else {
+                alert('以上输入不能为空');
+            }
+
         })
 
     })

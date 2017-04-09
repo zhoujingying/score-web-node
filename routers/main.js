@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var Student = require('../index');
+var Server = require('../index');
 
 
 var responseData;
@@ -27,13 +27,13 @@ router.get('/addStudent',function(req,res){
 router.get('/selectStudents',function(req,res){
 
     res.render('selectStudents',{
-        code:0
+        stuInfo:Server.classArr
     });
 });
 
 router.post('/addStudent',function (req,res) {
-    var student = req.body.student;
-    Student.addStudentsInfo(student);
+    var student = req.body;
+    Server.addStudentsInfo(student);
     responseData.code = 0;
     responseData.message = '添加成功';
     res.json(responseData);
@@ -42,13 +42,10 @@ router.post('/addStudent',function (req,res) {
 router.post('/selectStudents',function (req,res) {
 
     var number = req.body.stuNum;
-    var stuInfo = Student.printStudentsInfo(number);
-
-    // res.render('selectStudents',{
-    //     stuInfo:stuInfo,
-    //     code:1
-    // })
-    res.send(stuInfo);
+    var stuInfo = Server.printStudentsInfo(number);
+    res.send({
+        stuInfo:stuInfo
+    });
 })
 
 module.exports = router;

@@ -1,0 +1,76 @@
+<div class="content">
+    <div class="form-group text-box">
+        <div class="stu-list">
+            <label for="select_student_text" style="width: 145px;">请输入查找学生学号:</label>
+            <input type="text" class="form-control" id="select_student_text">
+        </div>
+        <button type="button" class="btn btn-default" id="btn">确认</button>
+    </div>
+
+    <div>
+        <% stuInfo.forEach(function (val) { %>
+        <table class="table table-hover" style="margin-top: 50px">
+            <tr>
+                <th>姓名</th>
+                <th>学号</th>
+                <th>名族</th>
+                <th>数学</th>
+                <th>语文</th>
+                <th>英语</th>
+                <th>编程</th>
+                <th>平均分</th>
+                <th>总分</th>
+            </tr>
+            <tbody>
+            <% val.stuInfo.forEach(function (stuVal) { %>
+            <tr>
+                <td><%= stuVal.name %></td>
+                <td><%= stuVal.stuNo %></td>
+                <td><%= stuVal.nation %></td>
+                <td><%= stuVal.subject.Math %></td>
+                <td><%= stuVal.subject.Chinese %></td>
+                <td><%= stuVal.subject.English %></td>
+                <td><%= stuVal.subject.program %></td>
+                <td><%= stuVal.stuScore.aveScore %></td>
+                <td><%= stuVal.stuScore.totalScore %></td>
+            </tr>
+            <% }) %>
+            <tbody>
+        </table>
+        <p>全班平均分为：<span><%= val.classAveScore %></span></p>
+        <p>全班中位分为：<span><%= val.classMiddleScore %></span></p>
+        <% }) %>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        var content = $('.content').html();
+        $('#btn').click(function () {
+//            var stuNum = $('#select_student_text').val();
+//            if(stuNum!==''){
+                $.ajax({
+                    type:'post',
+                    url:'/selectStudents',
+                    data:{
+                        stuNum:$('#select_student_text').val()
+                    },
+                    dataType:'json',
+                    success:function(result){
+                        if(!result){
+                            alert('查找失败');
+                        }else {
+                            var html = ejs.render(content,result);
+                            $('.content').html(html);
+                        }
+                    }
+                })
+
+        })
+
+
+
+
+    })
+</script>

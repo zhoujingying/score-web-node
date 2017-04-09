@@ -2,9 +2,9 @@
 var stuArr = [];
 var classArr = [];
 
-function addStudentsInfo(stuInfoStr){
-    var stu = getStuInfo(stuInfoStr);
-    var countScore = countStuScore(stu);
+function addStudentsInfo(stuInfo){
+    // var stu = getStuInfo(stuInfoStr);
+    var countScore = countStuScore(stuInfo);
     addStudent(countScore);
     classGrouping();
     calculateClass();
@@ -12,7 +12,8 @@ function addStudentsInfo(stuInfoStr){
 
 function printStudentsInfo(stuNumStr){
     var stuNum = getStuNum(stuNumStr);
-    return getStuClassInfo(stuNum);
+    // return getStuClassInfo(stuNum);
+    return getSelectedStuInfo(stuNum);
 }
 
 function addStudent(stu) {
@@ -95,6 +96,29 @@ function getStuClassInfo(stuNumArr) {
     })
     return stuInfo;
 }
+
+//new requirement------return student information that selected
+function getSelectedStuInfo(stuNumArr) {
+    var result = [];
+    var stuInfo = [];
+    stuNumArr.forEach(function (nVal) {
+        classArr.forEach(function (val) {
+            val.stuInfo.forEach(function (sVal) {
+                if (nVal === sVal.stuNo) {
+                    var sameStu = val;
+                    sameStu.stuInfo = [];
+                    sameStu.stuInfo.push(sVal);
+                    result.push(sameStu);
+
+                }
+            })
+        })
+    });
+    return result;
+}
+
+/*===============================*/
+
 function toPrintString(inputStuArr) {
     var str = '';
     inputStuArr.forEach(function (val) {

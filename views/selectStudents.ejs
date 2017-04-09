@@ -4,73 +4,129 @@
     <meta charset="UTF-8">
     <title>查找学生</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/js/ejs.min.js">
+    <script type="text/javascript" src="/js/ejs.min.js"></script>
+    <link rel="stylesheet" href="/css/index.css">
     <script type="text/javascript" src="/js/jquery.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container">
-        <ul class="nav nav-pills">
-            <li><a href="/">首页</a></li>
-            <li><a href="/addStudent">新增学生</a></li>
-            <li><a href="/selectStudents">查询学生</a></li>
-        </ul>
+
+<%- include('../template/nav'); %>
+
+
+    <div class="form-group text-box">
+        <div class="stu-list">
+            <label for="select_student_text" style="width: 145px;">请输入查找学生学号:</label>
+            <input type="text" class="form-control" id="select_student_text">
+        </div>
+        <button type="button" class="btn btn-default" id="btn">确认</button>
     </div>
-</nav>
-<div class="form-group">
-    <label for="select-student-text">格式：学号，学号,...</label>
-    <input type="text" class="form-control" id="select-student-text" name="stuNum">
-</div>
 
-<button type="button" class="btn btn-default" id="btn">确认</button>
+    <div class="stu-container">
 
-
-<% if(code === 1){%>
-<div class="show-stu-info">
-    <p>成绩单</p>
-    <% stuInfo.forEach(function (val) { %>
-    <div class="stu-list">
-        <p>姓名|数学|语文|英语|编程|平均分|总分</p>
-        <p>================================</p>
-        <% val.stuInfo.forEach(function (stuVal) { %>
-        <p>
-            <span><%= stuVal.name %></span>|<span><%= stuVal.subject.Math %></span>|<span><%= stuVal.subject.Chinese %></span>|<span><%= stuVal.subject.English %></span>
-            |<span id="stu-program"><%= stuVal.subject.program %></span>|<span><%= stuVal.stuScore.aveScore %></span>|<span><%= stuVal.stuScore.totalScore %></span>
-        </p>
-        <% }) %>
-
-        <p>================================</p>
+    <div class="firstLoad">
+        <% stuInfo.forEach(function (val) { %>
+        <table class="table table-hover" style="margin-top: 50px">
+            <tr>
+                <th>姓名</th>
+                <th>学号</th>
+                <th>名族</th>
+                <th>数学</th>
+                <th>语文</th>
+                <th>英语</th>
+                <th>编程</th>
+                <th>平均分</th>
+                <th>总分</th>
+            </tr>
+            <tbody>
+            <% val.stuInfo.forEach(function (stuVal) { %>
+            <tr>
+                <td><%= stuVal.name %></td>
+                <td><%= stuVal.stuNo %></td>
+                <td><%= stuVal.nation %></td>
+                <td><%= stuVal.subject.Math %></td>
+                <td><%= stuVal.subject.Chinese %></td>
+                <td><%= stuVal.subject.English %></td>
+                <td><%= stuVal.subject.program %></td>
+                <td><%= stuVal.stuScore.aveScore %></td>
+                <td><%= stuVal.stuScore.totalScore %></td>
+            </tr>
+            <% }) %>
+            <tbody>
+        </table>
         <p>全班平均分为：<span><%= val.classAveScore %></span></p>
         <p>全班中位分为：<span><%= val.classMiddleScore %></span></p>
+        <% }) %>
     </div>
-    <% }) %>
-    <p><a href="/">返回主界面</a></p>
-</div>
-<%}%>
+    <script id="content" type="text/template">
+        <div>
+            <% stuInfo.forEach(function (val) { %>
+            <table class="table table-hover" style="margin-top: 50px">
+                <tr>
+                    <th>姓名</th>
+                    <th>学号</th>
+                    <th>名族</th>
+                    <th>数学</th>
+                    <th>语文</th>
+                    <th>英语</th>
+                    <th>编程</th>
+                    <th>平均分</th>
+                    <th>总分</th>
+                </tr>
+                <tbody>
+                <% val.stuInfo.forEach(function (stuVal) { %>
+                <tr>
+                    <td><%= stuVal.name %></td>
+                    <td><%= stuVal.stuNo %></td>
+                    <td><%= stuVal.nation %></td>
+                    <td><%= stuVal.subject.Math %></td>
+                    <td><%= stuVal.subject.Chinese %></td>
+                    <td><%= stuVal.subject.English %></td>
+                    <td><%= stuVal.subject.program %></td>
+                    <td><%= stuVal.stuScore.aveScore %></td>
+                    <td><%= stuVal.stuScore.totalScore %></td>
+                </tr>
+                <% }) %>
+                <tbody>
+            </table>
+            <p>全班平均分为：<span><%= val.classAveScore %></span></p>
+            <p>全班中位分为：<span><%= val.classMiddleScore %></span></p>
+            <% }) %>
+        </div>
+    </script>
+    </div>
+
 </body>
 </html>
 
+
 <script>
     $(function () {
-        function getValue() {
-            return{
-                stuNum:$('#select-student-text').val()
-            }
-        }
-        $('#btn').on('click',function () {
+        var content = $('#content').html();
+        $('#btn').click(function () {
+
             $.ajax({
                 type:'post',
                 url:'/selectStudents',
-                data:getValue(),
+                data:{
+                    stuNum:$('#select_student_text').val()
+                },
                 dataType:'json',
                 success:function(result){
                     if(!result){
                         alert('查找失败');
                     }else {
-//                        window.location.reload();
+
+                        var html = ejs.render(content,result);
+                        $('.stu-container').html(html);
+
                     }
                 }
             })
+
         })
+
+
+
+
     })
 </script>

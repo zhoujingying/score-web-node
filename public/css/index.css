@@ -1,0 +1,23 @@
+.text-box{
+    width: 500px;
+    margin: 0 auto;
+}
+.text-box label{
+    display: inline-block;
+    float: left;
+    margin-right: 5px;
+    width: 60px;
+}
+.stu-list{
+    overflow: hidden;
+    height: 35px;
+    line-height: 35px;
+    margin-bottom: 10px;
+}
+.stu-list input{
+    width: 250px;
+    float: left;
+}
+#btn{
+    margin-left: 150px;
+}
