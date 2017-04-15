@@ -25,10 +25,14 @@ router.get('/addStudent',function(req,res){
 });
 
 router.get('/selectStudents',function(req,res){
-
+    // res.send({
+    //     stuInfo:Server.classArr
+    // });
     res.render('selectStudents',{
         stuInfo:Server.classArr
     });
+    console.log(Server.classArr);
+
 });
 
 router.post('/addStudent',function (req,res) {

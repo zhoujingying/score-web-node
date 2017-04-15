@@ -23,41 +23,8 @@
 
     <div class="stu-container">
 
-    <div class="firstLoad">
-        <% stuInfo.forEach(function (val) { %>
-        <table class="table table-hover" style="margin-top: 50px">
-            <tr>
-                <th>姓名</th>
-                <th>学号</th>
-                <th>名族</th>
-                <th>数学</th>
-                <th>语文</th>
-                <th>英语</th>
-                <th>编程</th>
-                <th>平均分</th>
-                <th>总分</th>
-            </tr>
-            <tbody>
-            <% val.stuInfo.forEach(function (stuVal) { %>
-            <tr>
-                <td><%= stuVal.name %></td>
-                <td><%= stuVal.stuNo %></td>
-                <td><%= stuVal.nation %></td>
-                <td><%= stuVal.subject.Math %></td>
-                <td><%= stuVal.subject.Chinese %></td>
-                <td><%= stuVal.subject.English %></td>
-                <td><%= stuVal.subject.program %></td>
-                <td><%= stuVal.stuScore.aveScore %></td>
-                <td><%= stuVal.stuScore.totalScore %></td>
-            </tr>
-            <% }) %>
-            <tbody>
-        </table>
-        <p>全班平均分为：<span><%= val.classAveScore %></span></p>
-        <p>全班中位分为：<span><%= val.classMiddleScore %></span></p>
-        <% }) %>
-    </div>
-    <script id="content" type="text/template">
+
+    <!--<script id="content" type="text/template">-->
         <div>
             <% stuInfo.forEach(function (val) { %>
             <table class="table table-hover" style="margin-top: 50px">
@@ -92,7 +59,7 @@
             <p>全班中位分为：<span><%= val.classMiddleScore %></span></p>
             <% }) %>
         </div>
-    </script>
+<!--//    </script>-->
     </div>
 
 </body>
@@ -101,9 +68,19 @@
 
 <script>
     $(function () {
-        var content = $('#content').html();
+//        var content = $('body').html();
+//        $.ajax({
+//            type:'get',
+//            url:'/selectStudents',
+//            dataType:'json',
+//            success:function(result){
+//                if(result){
+//                    var html = ejs.render(content,result);
+//                    $('body').html(html);
+//                }
+//            }
+//        })
         $('#btn').click(function () {
-
             $.ajax({
                 type:'post',
                 url:'/selectStudents',
@@ -117,8 +94,7 @@
                     }else {
 
                         var html = ejs.render(content,result);
-                        $('.stu-container').html(html);
-
+                        $('#content').html(html);
                     }
                 }
             })

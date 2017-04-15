@@ -41,18 +41,19 @@ function countStuScore(stuInfo) {
 }
 
 function classGrouping() {
+    var ifStu = false;
     stuArr.forEach(function (sVal) {
-        var ifStu = false;
         classArr.forEach(function (cVal) {
             if (sVal.className === cVal.classNum) {
-                ifStu = true;
                 if (cVal.stuInfo.indexOf(sVal) === -1) {
                     cVal.stuInfo.push(sVal);
                 }
+                ifStu = true;
             }
             else {
                 ifStu = false;
             }
+
         });
         if (!ifStu) {
             classArr.push({
